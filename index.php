@@ -1,4 +1,13 @@
 <?php include "header.php" ?>
+<?php
+    session_start();
+    $operacion = "";
+    if (isset($_SESSION['operacion'])) {
+        $operacion = $_SESSION['operacion'];
+        unset($_SESSION['operacion']);
+    }
+?>
+
 
 <div class="container" >
     <div class="card border-0 shadow my-5">
@@ -7,7 +16,7 @@
             <p class="lead">
                 <div class="row">
                     <div class="col-sm-12">
-                      <form action="servidor/agregarRegistro.php" method="POST">
+                      <form action="servidor/agregarRegistro.php"  enctype="multipart/form-data" method="POST">
                         <div class="form-row">
                           <div class="col">
                             <label for="nombre">Nombre</label>
@@ -49,7 +58,7 @@
                           </div>
                           <div class="col">
                             <label for="miimagen">Imagen de perfil</label>
-                            <input type="file" name="miimagen" class="form-control"required  >
+                            <input type="file" name="miimagen" id="miimagen" class="form-control"required  >
                           </div>
                         </div>
                         <br>

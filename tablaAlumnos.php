@@ -9,7 +9,7 @@
                     nummatricula,
                     area,
                     sexo,
-                    miimagen 
+                    miimagen ,extension
             FROM t_alumnos";
             
     $respuesta = mysqli_query($conexion, $sql);
@@ -38,11 +38,26 @@
                 <td><?php echo $ver['apellidopaterno']; ?></td>
                 <td><?php echo $ver['apellidomaterno']; ?></td>
                 <td><?php echo $ver['nombre'];?>          </td>
-                <td><?php echo $ver['fechanacimiento']; ?></td>
+                <td>
+                    <?php $fechas= new  DateTime($ver['fechanacimiento']) ; 
+                    $hoy = new DateTime();
+                    $edad = $hoy->diff($fechas);
+                    echo $edad->y;
+                    echo " años";
+                ?></td>
                 <td><?php echo $ver['nummatricula']; ?></td>
                 <td><?php echo $ver['sexo'];?></td>
                 <td><?php echo $ver['area']; ?></td>
-                <td><?php echo $ver['miimagen'];?></td>
+                <td><?php 
+                    $ext = $ver['extension'];
+                    $imagen = '';
+                    
+                    if ($ext == "jpg" || $ext == "JPG") {
+                        $cadenaImagen = '<img src=' . 'archivos/' . $ver['miimagen'] . ' width="50px" height="50px">';
+                        echo '<a href="visualizar.php?nombre=' . $ver['miimagen'] . '" target="_blank"> ' . $cadenaImagen . ' </a>';
+                    }
+                    ?>
+                </td>
                 
                 <td>
                     <form action="servidor/eliminarRegistro.php" method="POST">
